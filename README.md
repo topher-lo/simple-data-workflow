@@ -2,6 +2,7 @@
 [![MIT License](https://img.shields.io/badge/license-MIT-informational.svg)](https://opensource.org/licenses/MIT)
 [![Python 3.8](https://img.shields.io/badge/python-3.8-informational.svg)](https://www.python.org/downloads/)
 [![Test](https://github.com/topher-lo/simple-data-workflow/workflows/Run%20Tests/badge.svg)](https://github.com/topher-lo/simple-data-workflow/actions)
+[![codecov](https://codecov.io/gh/topher-lo/simple-data-workflow/branch/main/graph/badge.svg?token=2E5DZX9VOG)](https://codecov.io/gh/topher-lo/simple-data-workflow)
 
 A simple end-to-end data workflow (preprocessing, modelling, visualization) orchestrated using Prefect tasks and flows.
 
