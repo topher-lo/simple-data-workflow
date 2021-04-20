@@ -1,0 +1,8 @@
+[tool.pytest.ini_options]
+markers = [
+    "slow: mark test as slow (deselect with '-m \"not slow\"')",
+    "webtest: mark test as webtest (i.e. sends HTTP requests to a remote host)",
+    "smoke: mark test as smoke",
+    "apitest: mark test as API test (i.e. requires a running Prefect server and agent)",
+    "dasktest: mark test as Dask test (i.e. requires a running Dask distributed cluster)"
+]
