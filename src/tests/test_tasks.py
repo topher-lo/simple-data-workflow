@@ -7,10 +7,8 @@ from io import StringIO
 
 from pandas.testing import assert_frame_equal
 from pandas.testing import assert_index_equal
-from prefect.executors import LocalExecutor
 from numpy.testing import assert_equal
 
-from src.flow import e2e_pipeline
 from src.tasks import _column_wrangler
 from src.tasks import _obj_wrangler
 from src.tasks import _factor_wrangler
@@ -670,18 +668,3 @@ def test_plot_confidence_intervals(fake_regression_data):
     assert chart_specs['encoding']['x']['type'] == 'ordinal'
     assert chart_specs['encoding']['y']['field'] == 'estimate'
     assert chart_specs['encoding']['y']['type'] == 'quantitative'
-
-
-def test_e2e_pipeline():
-    """Smoke test. Flow successfully executes using a local executor.
-    """
-
-    kwargs = {
-        'url': 'https://vincentarelbundock.github.io/Rdatasets/csv/stevedata/fakeTSD.csv',
-        'cat_cols': ['year'],
-        'endog': 'y',
-        'exog': ['x1', 'x2']
-    }
-
-    state = e2e_pipeline.run(**kwargs, executor=LocalExecutor())
-    assert state.is_successful()
