@@ -1,63 +1,15 @@
-"""Individual data tasks (preprocessing, modelling, and postprocessing) are
-encapsulated into the following functions:
+"""This module contains individual data tasks (preprocessing, modelling, and postprocessing)
+encapsulated into individual functions. A list of data tasks and their API reference can be
+found in `README.md`.
 
---- Preprocessing ---
-
-1. `retrieve_data`:
-Retrieves data from a url, returns data as a DataFrame.
-
-2. `_column_wrangler`:
-Transforms column names into a consistent format.
-
-3. `_obj_wrangler`:
-Converts columns with `object` dtype into `StringDtype`.
-
-4. `_factor_wrangler`:
-Converts columns in `is_cat` into `CategoricalDtype`.
-
-5. `_check_model_assumptions`:
-Empty function
-
-6. `clean_data`:
-A pandas pipeline of data wranglers.
-
-7. `encode_data`:
-Transforms columns with `category` dtype into columns of dummies.
-
-8. `wrangle_na`:
-Wrangles missing values. 5 available strategies:
-- Complete case
-- Fill-in
-- Fill-in with indicators
-- Grand model
-- MICE
-
-9. `transform_data`:
-Applies transformations on data.
-
-10. `gelman_standardize_data`:
-Standardizes data by dividing by 2 standard deviations and mean-centering them.
-
---- Modelling ---
-
-11. `run_model`:
-`statsmodels` linear regression implementation.
-
---- Post-processing ---
-
-12. `plot_confidence_intervals`:
-Given a fitted OLS model in `statsmodels`, returns a box and whisker regression coefficient plot.
-
-Note 1. Public functions (i.e. functions without a leading underscore `_func`) are wrapped around Prefect's `@task` decorator
+Note 1. Public functions (i.e. functions without a leading underscore `_func`
+are wrapped around Prefect's `@task` decorator
 
 Note 2. Empty functions (e.g. `_check_model_assumptions`) are
 suggested data tasks for the user to implement.
 For instance, the model assumptions of multiple linear regression
 (i.e. no multicollinearity) might not appAly for another model
 (e.g. non-parametric models such as random forest).
-
-Note 3. The implementations in functions 9. and 10. are simple examples only.
-Replace the code within these functions to according to your data model.
 """
 
 import altair as alt
@@ -95,9 +47,11 @@ def clean_text(text: str):
     return clean_text
 
 
-# Sanitize user inputted column names
 @task
 def sanitize_col_names(cols: List[str]) -> List[str]:
+    """Sanitizes list of strings. Used to sanitize user
+    inputted column names.
+    """
     if cols:
         return [clean_text(col) for col in cols]
 
@@ -123,7 +77,7 @@ def retrieve_data(url: str,
             for reading pieces of large files.
 
     Returns:
-        A delimiter-separated text file is returned as a Pandas DataFrame.
+        The delimiter-separated text file as a Pandas DataFrame.
 
     Note 1. pandas uses its super fast C engine to read flat files
     ONLY IF `sep` is explicitly given. Otherwise, it uses
@@ -220,8 +174,8 @@ def _factor_wrangler(
             to `CategoricalDtype`.
 
         dummy_to_bool (bool): 
-            If True, converts all columns with integer
-            [0, 1] values or float [0.0, 1.0] values into `BooleanDtype`.
+            If True, converts all columns with integer [0, 1] values or
+            float [0.0, 1.0] values into `BooleanDtype`.
 
     Returns:
         A copy of the inputted Pandas DataFrame. Converts specified columns to
@@ -631,7 +585,7 @@ def run_model(data: pd.DataFrame,
 @task
 def plot_confidence_intervals(res: RegressionResultsWrapper) -> alt.Chart:
     """Returns a matplotlib axes containing a box and whisker
-    Seaborn plot of regression coefficients' point estimates and
+    Altair plot of regression coefficients' point estimates and
     confidence intervals.
     """
     alt.themes.register("streamlit", streamlit_theme)  # Enable custom theme
