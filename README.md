@@ -177,8 +177,8 @@ The standardized data.
 
 **Parameters:**
 - `data (pd.dataFrame)`: The data.
-- `strategy (str)`: Strategy to deal with missing values. 
-- `cols (list of str)`: columns to wrangle.
+- `y (str)`: Endogenous (outcome) variable.
+- `X (list of str)`: Exogenous (feature) variables.
 
 **Returns:**
 The data with missing data wrangled according to the specified strategy.
