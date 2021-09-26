@@ -634,11 +634,11 @@ def test_gelman_standardize_data():
             pd.NA,
             (5-int_na_x_mean)/int_na_x_std
         ],
-        'bool_x': [-0.4, -0.4, 0.6, 0.6, -0.4],
+        'bool_x': [-0.4, -0.4, 0.5, 0.5, -0.4],
         'cat_x': ['A', 'B', 'C', 'D', 'E'],
         'string_x': ['This', 'should', 'be', 'unchanged', '.']
     }).astype(expected_dtypes)
-    assert_frame_equal(result, expected)
+    assert_frame_equal(round(result, 1), round(expected, 1))
 
 
 def test_run_model(fake_regression_data) -> alt.Chart:
